@@ -1,0 +1,26 @@
+# `rayman` -- Raylib Manpages
+
+Raylib is notable for its 'documentation-by-example' style. This is an excellent way to
+learn a thing, but when developing it is useful to have specific reference material.
+
+This is a collection of manpages for raylib. I started writing them so I could quickly
+check a reference via <S-k> from inside vim, without having to go to the browser. But
+you could use it however you like.
+
+## Installation
+
+Clone the repo to your preferred loaction and fire off the `install` make target. You
+may need administrator privileges. E.g.:
+
+```sh
+    git clone https://github.com/MichaelCromer/rayman.git
+    cd rayman
+    sudo make install
+```
+
+If you don't have `make`, or you want to install to a specific location, you can
+manually `install` the docs by following along with the process in the Makefile.
+
+## Contributing
+
+Please do! Issues and PRs welcome.
