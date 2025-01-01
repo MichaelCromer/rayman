@@ -1,0 +1,200 @@
+.TH DrawRectangle 3 2025-01-01
+.
+.SH NAME
+DrawRectangle,
+DrawRectangleV,
+DrawRectangleRec,
+DrawRectanglePro,
+DrawRectangleGradientV,
+DrawRectangleGradientH,
+DrawRectangleGradientEx,
+DrawRectangleLines,
+DrawRectangleLinesEx,
+DrawRectangleRounded,
+DrawRectangleRoundedLines,
+DrawRectangleRoundedLinesEx,
+.
+.SH LIBRARY
+raylib.h
+.
+.SH SYNOPSIS
+.EX
+.B #include <raylib.h>
+.PP
+.B void DrawRectangle(
+.RS 
+.BI "int " posX ", int " posY ", int " width ", int " height ", Color " color );
+.RE 
+.B void DrawRectangleV(
+.RS
+.BI "Vector2 " position ", Vector2 " size ", Color " color );
+.RE
+.B void DrawRectangleRec(
+.RS
+.BI "Rectangle " rec ", Color " color );
+.RE
+.B void DrawRectanglePro(
+.RS
+.BI "Rectangle " rec ", Vector2 " origin ", float " rotation ", Color " color );
+.RE
+.PP
+.B void DrawRectangleGradientV(
+.RS
+.BI "int " posX ", int " posY ", int " width ", int " height ", Color " top ", Color " bottom );
+.RE
+.B void DrawRectangleGradientH(
+.RS
+.BI "int " posX ", int " posY ", int " width ", int " height ", Color " left ", Color " right );
+.RE
+.B void DrawRectangleGradientEx(
+.RS
+.BI "Rectangle " rec ", Color " topLeft ", Color " bottomLeft ", Color " topRight ", Color " bottomRight );
+.RE
+.PP
+.B void DrawRectangleLines(
+.RS
+.BI "int " posX ", int " posY ", int " width ", int " height ", Color " color );
+.RE
+.B void DrawRectangleLinesEx(
+.RS
+.BI "Rectangle " rec ", float " lineThick ", Color " color );
+.RE
+.PP
+.B void DrawRectangleRounded(
+.RS
+.BI "Rectangle " rec ", float " roundness ", int " segments ", Color " color );
+.RE
+.B void DrawRectangleRoundedLines(
+.RS
+.BI "Rectangle " rec ", float " roundness ", int " segments ", Color " color );
+.RE
+.B void DrawRectangleRoundedLinesEx(
+.RS
+.BI "Rectangle " rec ", float " roundness ", int " segments ", float " lineThick ", Color " color );
+.RE
+.EE
+.
+.SH DESCRIPTION
+The 
+.BR DrawRectangle () 
+function family provides various methods and styles of drawing rectangles.
+All take position and dimensions parameters in some form, as well as at least one
+.B Color
+parameter. 
+While superficially similar, there are some gotchas regarding their implementations.
+.PP
+The
+.BR DrawRectangle "(), " DrawRectangleV (),
+and
+.BR DrawRectangleRec ()
+functions draw a rectangle,
+the only distinction being in how the location and dimensions are specified
+.RB "(being " float "s, " Vector2 "s, and " Rectangle "s respectively).
+.PP
+.BR DrawRectanglePro ()
+offers full generality of drawing with respect to a specific origin and rotation.
+Draw like a pro!
+.PP
+.BR DrawRectangleGradientV "(), "  DrawRectangleGradientH (),
+and
+.BR DrawRectangleGradientEx (),
+fill a rectangle with gradient based off specified 
+.BR Color s
+for each edge or corner.
+.PP
+.BR DrawRectangleLines ()
+and
+.BR DrawRectangleLinesEx ()
+draw a rectangular outline, the latter allowing for a line thickness parameter. 
+While superficially similar, these have different implementations (see
+.B NOTES
+below).
+.PP
+The 
+.BR DrawRectangleRounded "(), " DrawRectangleRoundedLines (),
+and 
+.BR DrawRectangleRoundedLinesEx ()
+functions draw round-corners rectangles and rectangular outlines,
+comparable to their non-rounded namesakes (with 
+.BR NOTE -able
+exceptions).
+.
+.SH NOTES
+.IP \(em
+.BR DrawRectangle "(), "  DrawRectangleV (),
+and
+.BR DrawRectangleRec ()
+functions are implemented simply as specialised calls to 
+.BR DrawRectanglePro ().
+.IP \(em
+Likewise
+.BR DrawRectangleGradientV ()
+and
+.BR DrawRectangleGradientH ()
+are implemented as specialised calls to
+.BR DrawRectangleGradientEx ().
+.IP \(em
+.BR DrawRectangleLinesEx ()
+is implemented by breaking the thickened outline into four rectangles:
+the top and bottom edges,
+and the remaining left and right edge segments.
+These are drawn with four
+.BR DrawRectangleRec ()
+calls.
+.IP \(em
+On the other hand,
+.BR DrawRectangleLines ()
+is
+.I not
+implemented like this; it uses RL_LINES drawing mode instead,
+which requires flushing the current draw batch and switching to this mode.
+This addresses flickering when zooming due to use of RL_QUADS mode
+.RI ( https://github.com/raysan5/raylib/issues/3884 ).
+.IP \(em
+The functions
+.BR DrawRectangleRounded ()
+and
+.BR DrawRectangleRoundedLinesEx ()
+split the rectangle into nine and eight regions respectively,
+defined by their common corners (arrays of
+.BR Vector2 s).
+The drawing is achieved by manually constructing the quads,
+and not through calls to other functions in the
+.BR DrawRectangle ()
+family.
+.IP \(em
+Unlike
+.BR DrawRectangleLines (),
+the rounded version 
+.BR DrawRectangleRoundedLines ()
+is achieved with a single specialised call to
+.BR DrawRectangleRoundedLinesEx ().
+Refactoring this function to use RL_LINES draw mode instead is listed as a todo item,
+as of raylib version 5.5.
+.
+.SH FILES
+.TP
+.I raylib.h
+Function prototypes.
+.TP
+.I rshapes.c
+Function definitions.
+.
+.SH AUTHORS
+Michael Cromer
+.
+.SH COPYRIGHT
+.TP
+.B rayman
+Copyright \(co 2025 Michael Cromer under the
+.I zlib
+License.
+.TP
+.B raylib
+Copyright \(co 2013-2025 Ramon Santamaria under the
+.I zlib
+License.
+.
+.SH SEE ALSO
+.BR Rectangle (3)
+
