@@ -1,0 +1,156 @@
+.\" 
+
+.TH DrawCircle 3 2025-01-02
+.
+.SH NAME
+DrawCircle,
+DrawCircleV,
+DrawCircleSector,
+DrawCircleSectorLines,
+DrawCircleGradient,
+DrawCircleLines,
+DrawCircleLinesV,
+DrawEllipse,
+DrawEllipseLines,
+DrawRing,
+DrawRingLines
+.
+.SH LIBRARY
+raylib.h
+.
+.SH SYNOPSIS
+.EX
+.B #include <raylib.h>
+.PP
+.B void DrawCircle(
+.RS 
+.BI "int " centerX ", int " centerY ", float " radius ", Color " color );
+.RE 
+.B void DrawCircleV(
+.RS
+.BI "Vector2 " center ", float " radius ", Color " color );
+.RE
+.PP
+.B void DrawCircleSector(
+.RS
+.BI "Vector2 " center ", float " radius ", float " startAngle ", float " endAngle ", int " segments ", Color " color);
+.RE
+.B void DrawCircleSectorLines(
+.RS
+.BI "Vector2 " center ", float " radius ", float " startAngle ", float " endAngle ", int " segments ", Color " color);
+.RE
+.PP
+.B void DrawCircleGradient(
+.RS
+.BI "int " centerX ", int " centerY ", float " radius ", Color " inner ", Color " outer );
+.RE
+.PP
+.B void DrawCircleLines(
+.RS
+.BI "int " centerX ", int " centerY ", float " radius ", Color " color );
+.RE
+.B void DrawCircleLinesV(
+.RS
+.BI "Vector2 " center ", float " radius ", Color " color );
+.RE
+.PP
+.B void DrawEllipse(
+.RS 
+.BI "int " centerX ", int " centerY ", float " radiusH ", float " radiusV ", Color " color );
+.RE 
+.B void DrawEllipseLines(
+.RS 
+.BI "int " centerX ", int " centerY ", float " radiusH ", float " radiusV ", Color " color );
+.RE 
+.PP
+.B void DrawRing(
+.RS
+.BI "Vector2 " center ", float " innerRadius ", float " outerRadius ", float " startAngle ", float " endAngle ", int " segments ", Color " color );
+.RE 
+.B void DrawRingLines(
+.RS 
+.BI "Vector2 " center ", float " innerRadius ", float " outerRadius ", float " startAngle ", float " endAngle ", int " segments ", Color " color );
+.RE 
+.EE
+.
+.SH DESCRIPTION
+The 
+.BR DrawCircle () 
+function family provides various methods and styles of drawing circles.
+All take position and dimension parameters in some form, as well as at least one
+.B Color
+parameter. 
+.PP
+The
+.BR DrawCircle "(), and " DrawCircleV ()
+functions draw a circle,
+the only distinction being in how the location and dimensions are specified
+.RB "(being " float "s, and " Vector2 "s respectively)."
+.PP
+.BR DrawCircleSector "(), and " DrawCircleSectorLines ()
+draw an angular segment of a circle using a specified number of triangular segments.
+.PP
+.BR DrawCircleGradient ()
+fills a circle with a radial gradient based off specified 
+.BR Color s
+for the centre and the circumference.
+.PP
+.BR DrawCircleLines ()
+and
+.BR DrawCircleLinesV ()
+draw circular outlines using either
+.BR float s
+or 
+.B Vector2
+locations.
+.PP
+.BR DrawEllipse "() and " DrawEllipseLines ()
+draw axis-aligned ellipses and ellipse outlines.
+.PP
+.BR DrawRing "() and " DrawRingLines ()
+draw annular segments and outlines.
+.
+.SH NOTES
+.IP \(em
+.BR DrawCircle ()
+is a specialised called to 
+.BR DrawCircleV (),
+which is itself implemented as a call to
+.BR DrawCircleSector ().
+Likewise 
+.BR DrawCircleLines ()
+is implemented as a call to
+.BR DrawCircleLinesV ().
+.IP \(em
+All
+.B Lines
+style functions in the
+.BR DrawCircle ()
+family use RL_LINES draw mode.
+.IP \(em
+Functions in this family which draw an entire shape
+.RB ( DrawCircle "(), " DrawEllipse "(), " DrawCircleGradient (), 
+etc) all use 36 segments of 10 degrees each.
+.
+.SH FILES
+.TP
+.I raylib.h
+Function prototypes.
+.TP
+.I rshapes.c
+Function definitions.
+.
+.SH AUTHORS
+Michael Cromer
+.
+.SH COPYRIGHT
+.TP
+.B rayman
+Copyright \(co 2025 Michael Cromer under the
+.I zlib
+License.
+.TP
+.B raylib
+Copyright \(co 2013-2025 Ramon Santamaria under the
+.I zlib
+License.
